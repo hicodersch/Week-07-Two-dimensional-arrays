@@ -30,10 +30,13 @@ const GEO_INDEX = 4;
  * @param {*} pNoteList 
  */
 function findAverageNote(pLessonIndex, pNoteList) {
-    let totalNote = null;
-    pNoteList.map(student => totalNote += student[pLessonIndex])
-    let averageNote = Math.round(totalNote / pNoteList.length);
-    return averageNote
+    let totalNote = 0;
+    let averageNote = 0;
+    for (let index = 0; index < pNoteList.length; index++) {
+        totalNote += pNoteList[index][pLessonIndex]
+        averageNote = Math.round(totalNote / pNoteList.length);
+    }
+    return averageNote;
 }
 /**
  * Not Ortalamasini Ekrana Yazdiran Fonksiyon
@@ -51,11 +54,11 @@ function renderAveregeNote(pAverageNote, pLessonName) {
  */
 function findOverBorderStudent(pNoteList, pLessonIndex, pBorderNote) {
     let passedStudentList = [];
-    pNoteList.map(student => {
-        if (student[pLessonIndex] > pBorderNote) {
-            passedStudentList.push(student[STUDENT_NAME] + " " + student[pLessonIndex]);
+    for (let index = 0; index < pNoteList.length; index++) {
+        if (pNoteList[index][pLessonIndex] > pBorderNote) {
+            passedStudentList.push(pNoteList[index][STUDENT_NAME] + " " + pNoteList[index][pLessonIndex]);
         }
-    })
+    }
     return passedStudentList;
 }
 /**
@@ -75,11 +78,11 @@ function renderPassedStudents(pLessonName, pBorderNote, pPassedStudentList) {
  */
 function findOverAverageStudentList(pNoteList, pLessonIndex, pAverageNote) {
     let overAverageStudent = [];
-    pNoteList.map(student => {
-        if (student[pLessonIndex] > pAverageNote) {
-            overAverageStudent.push(student[STUDENT_NAME] + " " + student[pLessonIndex]);
+    for (let index = 0; index < pNoteList.length; index++) {
+        if (pNoteList[index][pLessonIndex] > pAverageNote) {
+            overAverageStudent.push(pNoteList[index][STUDENT_NAME] + " " + pNoteList[index][pLessonIndex]);
         }
-    })
+    }
     return overAverageStudent;
 }
 /**
@@ -97,19 +100,22 @@ function renderOverAverageStudent(pAverageNote, pLessonName, pOverAverageStudent
  * @param {*} pLessonIndex 
  */
 function findMaxNoteStudent(pNoteList, pLessonIndex) {
-    let lessonNotes = pNoteList.map(student => student[pLessonIndex]);
+    let lessonNotes = [];
+    for (let index = 0; index < pNoteList.length; index++) {
+        lessonNotes.push(pNoteList[index][pLessonIndex])
+    }
     let maxNote = lessonNotes[0];
     let maxNoteStudent = [];
-    lessonNotes.map(note => {
-        if (note >= maxNote) {
-            maxNote = note
+    for (let index = 0; index < pNoteList.length; index++) {
+        if (pNoteList[index][pLessonIndex] >= maxNote) {
+            maxNote = pNoteList[index][pLessonIndex]
         }
-    })
-    pNoteList.map(student => {
-        if (student[pLessonIndex] === maxNote) {
-            maxNoteStudent.push(student[STUDENT_NAME] + " " + maxNote);
+    }
+    for (let index = 0; index < pNoteList.length; index++) {
+        if (pNoteList[index][pLessonIndex] === maxNote) {
+            maxNoteStudent.push(pNoteList[index][STUDENT_NAME] + " " + maxNote);
         }
-    })
+    }
     return maxNoteStudent;
 }
 /**
